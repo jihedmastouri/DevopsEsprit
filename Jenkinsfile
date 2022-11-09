@@ -20,7 +20,12 @@ pipeline {
 				sh """mvn test"""
 			}
 		}
-         stage('Deploy'){
+         stage('Nexus'){
+			steps {
+				sh """mvn deploy -DskipTests"""
+			}
+		}
+         stage('Run'){
 			steps {
 				sh """docker-compose up"""
 			}
