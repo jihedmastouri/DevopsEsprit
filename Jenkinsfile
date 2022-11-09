@@ -1,12 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout GIT'){
-            steps {
-                echo 'Pulling...';
-                git branch: 'main',
-                url : 'https://github.com/WaelBouatay/Achat-DevOps';
-            }
-        }
+         stage('Maven Test'){
+			steps: {
+				sh """mvn test"""
+			}
+		}
+         stage('Maven Build'){
+			steps: {
+				sh """mvn clean install"""
+			}
+		}
+         stage('Docker Run'){
+			steps: {
+				sh """docker-compose up"""
+			}
+		}
     }
 }
