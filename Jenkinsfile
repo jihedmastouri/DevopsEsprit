@@ -2,17 +2,17 @@ pipeline {
     agent any
     stages {
          stage('Maven Test'){
-			steps: {
+			steps {
 				sh """mvn test"""
 			}
 		}
          stage('Maven Build'){
-			steps: {
+			steps {
 				sh """mvn clean install"""
 			}
 		}
          stage('Maven SonarQube'){
-			steps: {
+			steps {
 				sh """ mvn sonar:sonar \
 				  -Dsonar.projectKey=achat \
 				  -Dsonar.host.url=http://192.168.56.55:9000 \
@@ -21,7 +21,7 @@ pipeline {
 			}
 		}
          stage('Docker Run'){
-			steps: {
+			steps {
 				sh """docker-compose up"""
 			}
 		}
