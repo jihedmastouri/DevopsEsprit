@@ -1,12 +1,12 @@
 pipeline {
     agent any
     stages {
-         stage('Maven Build'){
+         stage('Compile'){
 			steps {
-				sh """mvn clean install -DskipTests=true"""
+				sh """mvn clean compile"""
 			}
 		}
-         stage('Maven SonarQube'){
+         stage('SonarQube'){
 			steps {
 				sh """ mvn sonar:sonar \
 				  -Dsonar.projectKey=achat \
@@ -15,7 +15,12 @@ pipeline {
 				"""
 			}
 		}
-         stage('Docker Run'){
+         stage('Testing'){
+			steps {
+				sh """mvn test"""
+			}
+		}
+         stage('Deploy'){
 			steps {
 				sh """docker-compose up"""
 			}
