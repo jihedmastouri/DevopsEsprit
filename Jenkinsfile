@@ -27,13 +27,13 @@ pipeline {
 		}
 		 stage('Build image') {
             steps {
-        		 sh "docker build -t jihedmastouri/devopsSpring ."
+        		 sh "docker build -t jihedmastouri/devops-spring ."
         	}
         }  
 		 stage('Push image') {
   			steps {
-  			    withDockerRegistry([ credentialsId: "5f7ee0c6-ad9f-464d-98ad-bebea2ef46d9", url: "" ]) {
-					sh "docker push jihedmastouri/devopsSpring"
+  			    withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+					sh "docker push jihedmastouri/devops-spring"
 				}
 			}
         }
