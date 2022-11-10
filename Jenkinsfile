@@ -25,10 +25,29 @@ pipeline {
 				sh """mvn deploy -DskipTests"""
 			}
 		}
+		 stage('Build image') {
+            steps {
+        		 sh "docker build -t jihedmastouri/devopsSpring ."
+        	}
+        }  
+		 stage('Push image') {
+  			steps {
+  			    withDockerRegistry([ credentialsId: "5f7ee0c6-ad9f-464d-98ad-bebea2ef46d9", url: "" ]) {
+					sh "docker push jihedmastouri/devopsSpring"
+				}
+			}
+        }
          stage('Run'){
 			steps {
 				sh """docker-compose up -d"""
 			}
 		}
+		 stage('Sending email') {
+	        steps {
+	             mail bcc: '', body: '''Hello from Firas,
+	             Devops Pipeline with success.
+	             Cordialement''', cc: '', from: '', replyTo: '', subject: 'Devops', to: 'firas.gacha@esprit.tn'
+	        }
+	    }
     }
 }

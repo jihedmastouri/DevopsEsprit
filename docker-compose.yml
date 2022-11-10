@@ -15,9 +15,7 @@ services:
       - achatdb:/var/lib/mysql
 
   spring_app:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: jihedmastouri/devopsSpring
     container_name: achatspring
     restart: on-failure
     environment:
@@ -28,6 +26,14 @@ services:
       - mysqldb
     volumes:
       - "${HOME}/.m2:/root/.m2"
+
+    front:
+      image: jihedmastouri/devopsSpring
+      container_name: front
+      depends_on:
+        - spring_app
+      ports:
+        - 4200:4200
 
 volumes:
   achatdb:
