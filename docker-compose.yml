@@ -27,14 +27,14 @@ services:
     volumes:
       - "${HOME}/.m2:/root/.m2"
 
-    front:
-      image: jihedmastouri/devops-front
-      container_name: front
-      restart: on-failure
-      depends_on:
-        - spring_app
-      ports:
-        - 4200:4200
+  front:
+    image: jihedmastouri/devops-front
+    container_name: front
+    restart: on-failure
+    depends_on:
+      - spring_app
+    ports:
+      - 4200:4200
 
 volumes:
   achatdb:
