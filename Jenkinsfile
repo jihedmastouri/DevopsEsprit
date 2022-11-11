@@ -44,9 +44,9 @@ pipeline {
 		}
 		 stage('Sending email') {
 	        steps {
-	             mail bcc: '', body: '''Hello from Firas,
+	             mail bcc: '', body: '''Hello from Mj,
 	             Devops Pipeline with success.
-	             Cordialement''', cc: '', from: '', replyTo: '', subject: 'Devops', to: 'firas.gacha@esprit.tn'
+	             Cordialement''', cc: '', from: '', replyTo: '', subject: 'Devops', to: 'jihedmastouri.inbox@gmail.com'
 	        }
 	    }
     }
