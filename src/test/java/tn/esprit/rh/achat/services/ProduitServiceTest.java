@@ -25,77 +25,76 @@ import static org.mockito.Mockito.verify;
 public class ProduitServiceTest {
 
 	
-	@Mock // declaration d'un mock
-	ProduitRepository pr;
+	@Mock
+	ProduitRepository produitRepository;
 
 	@InjectMocks
-	ProduitServiceImpl psi;
+	ProduitServiceImpl produitService;
 
-	Produit p = Produit.builder().codeProduit("159").dateCreation(null).dateDerniereModification(null)
-			.libelleProduit("arctic").prix(1200).build();
+	Produit p = Produit.builder().codeProduit("20420").libelleProduit("WHAT")
+			.prix(9999).dateCreation(null).dateDerniereModification(null).build();
 
 	@DisplayName("GET Produits")
 	@Test
-	void GetProductTest() {
+	void GetProducts() {
 
-		List<Produit> lst = new ArrayList<>();
-		lst.add(new Produit());
+		List<Produit> produits = new ArrayList<>();
+		produits.add(new Produit());
 
-		Mockito.when(pr.findAll()).thenReturn(lst);
-		List<Produit> exp = psi.retrieveAllProduits();
-		assertEquals(exp, lst);
+		Mockito.when(produitRepository.findAll()).thenReturn(produits);
+		List<Produit> exp = produitService.retrieveAllProduits();
+		assertEquals(exp, produits);
 	}
 
 	@DisplayName("GET Produit By id")
 	@Test
 	void GetbyID() {
 
-		Mockito.when(pr.findById(Mockito.anyLong())).thenReturn(Optional.of(p));
-		Produit prod = psi.retrieveProduit(3L);
+		Mockito.when(produitRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(p));
+		Produit prod = produitService.retrieveProduit(42L);
 		assertNotNull(prod);
-		verify(pr).findById(Mockito.anyLong());
+		verify(produitRepository).findById(Mockito.anyLong());
 
 	}
 
 	@DisplayName("Update Produit")
 	@Test
-	void EditProductTest() {
-		Produit pedit = new Produit();
-		pedit.setIdProduit(3L);
-		pedit.setLibelleProduit("edit");
+	void EditProduct() {
+		Produit pd = new Produit();
+		pd.setIdProduit(42L);
+		pd.setLibelleProduit("Best Product");
 
-		Produit new_pedit = new Produit();
-		new_pedit.setLibelleProduit("new edit");
+		Produit new_pd = new Produit();
+		new_pd.setLibelleProduit("new Product");
 
-		Mockito.lenient().when(pr.findById(pedit.getIdProduit())).thenReturn(Optional.of(pedit));
-		// assertEquals(pedit, psi.updateProduit(new_pedit) );
-		pedit = psi.updateProduit(new_pedit);
-		verify(pr).save(pedit);
+		Mockito.when(produitRepository.findById(pd.getIdProduit())).thenReturn(Optional.of(pd));
+		pd = produitService.updateProduit(new_pd);
+		verify(produitRepository).save(pd);
 	}
 
 	@DisplayName("Add Produit")
 	@Test
-	void AddProductTest() {
+	void AddProduct() {
 
 		Produit produit = new Produit();
-		produit.setLibelleProduit("arctic");
-		Mockito.lenient().when(pr.save(produit)).thenReturn(produit);
-		Produit newp = psi.addProduit(produit);
-		assertEquals(produit.getLibelleProduit(), newp.getLibelleProduit());
-		verify(pr).save(produit);
+		produit.setLibelleProduit("Ma9arouna");
+		Mockito.when(produitRepository.save(produit)).thenReturn(produit);
+		Produit newp = produitService.addProduit(produit);
+		assertEquals(produit.getIdProduit(), newp.getIdProduit());
+		verify(produitRepository).save(produit);
 	}
 
 	@DisplayName("Delete Produit")
 	@Test
-	void DeleteTest() {
+	void Delete() {
 		Produit p = new Produit();
-		p.setLibelleProduit("libelle");
+		p.setLibelleProduit("Name");
 		p.setIdProduit((long) 3);
 		Long pid = p.getIdProduit();
-		Mockito.lenient().when(pr.findById(pid)).thenReturn(Optional.of(p));
+		Mockito.when(produitRepository.findById(pid)).thenReturn(Optional.of(p));
 
-		psi.deleteProduit(pid);
-		verify(pr).deleteById(pid);
+		produitService.deleteProduit(pid);
+		verify(produitRepository).deleteById(pid);
 	}
 
 
