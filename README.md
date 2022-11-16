@@ -1,6 +1,8 @@
 # DevOps School Project
 
-We are handed an application developed using `Spring`, `Angular` and `mySQL` and asked to create a Pipeline in `Jenkins` to unsure `CI`. Further Information below.
+We were handed an application developed using `Spring`, `Angular` and `mySQL` and asked to create a Pipeline in `Jenkins` to unsure `CI`. 
+
+Further Information below.
 
 ## Enviroment:
 
@@ -26,7 +28,7 @@ Docker images (dockerhub) : [Backend](https://hub.docker.com/repository/docker/j
 
 ## Project Description:
 
-- Containerized the app using `Docker` / `Docker-Compose`.
+- Containerizing the app using `Docker` / `Docker-Compose`.
 
 - Unit-Testing using `Junit` and `Mockito`.
 
